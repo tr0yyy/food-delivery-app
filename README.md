@@ -1,5 +1,6 @@
 ## Platforma Food Delivery
 ### Elemente Avansate de Programare - CTI - 2020/21
+
 ---
 
 * In cadrul sistemului creat, se pot efecuta urmatoarele operatii:
