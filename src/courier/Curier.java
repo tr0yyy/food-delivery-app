@@ -2,40 +2,40 @@ package courier;
 
 import person.Persoana;
 
-public class Curier extends Persoana{
-    private int id_livrator;
-    private int id_curier;
+import java.util.Scanner;
 
-    public Curier(String nume, String prenume, String nr_telefon, int id_livrator) {
+public class Curier extends Persoana{
+    private Integer id_livrator;
+    private Masina car;
+
+    public Curier(String nume, String prenume, String nr_telefon, Masina car) {
         super(nume, prenume, nr_telefon);
-        this.id_livrator = id_livrator;
+        this.car = car;
     }
 
-    public int getId_livrator() {
+    public Integer getId_livrator() {
         return id_livrator;
     }
 
-    public void setId_livrator(int id_livrator) {
+    public void setId_livrator(Integer id_livrator) {
         this.id_livrator = id_livrator;
     }
 
-    public int getId_curier() {
-        return id_curier;
+    public Masina getCar() {
+        return car;
     }
 
-    public void setId_curier(int id_curier) {
-        this.id_curier = id_curier;
+    public void setCar(Masina car) {
+        this.car = car;
     }
 
     @Override
     public String toString() {
-        return "Curier " + id_curier + '\n' +
-                "ID Livrator " + id_livrator + '\n' +
-                "ID Curier " + id_curier + '\n' +
+        return "ID Livrator " + id_livrator + '\n' +
                 "Nume " + nume + '\n' +
                 "Prenume " + prenume + '\n' +
-                "Numar telefon " + nr_telefon + '\n';
+                "Numar telefon " + nr_telefon + '\n' +
+                "Masina " + car + '\n';
     }
-
 
 }

@@ -6,15 +6,28 @@ public class User extends Persoana {
     private String username;
     private String adresa;
 
-    User(){
-        super();
-        username = "";
-        adresa = "";
+    public User(){
     }
 
-    User(String nume, String prenume, String nr_telefon, String username, String adresa){
+    public User(String nume, String prenume, String nr_telefon, String username, String adresa){
         super(nume,prenume,nr_telefon);
         this.username = username;
+        this.adresa = adresa;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getAdresa() {
+        return adresa;
+    }
+
+    public void setAdresa(String adresa) {
         this.adresa = adresa;
     }
 

@@ -1,6 +1,6 @@
 package courier;
 
-public final class Masina {
+public class Masina {
     private final String marca;
     private final String model;
     private final String nr_inmatriculare;

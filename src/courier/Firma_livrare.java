@@ -3,19 +3,19 @@ package courier;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Livrator {
-    static int count_livratori = 0;
+public class Firma_livrare {
+    private static Integer count_firme_livrari = 0;
     private String denumire;
-    private int id_livrator;
+    private Integer id_livrator;
     private SortedSet<Curier> curieri = new TreeSet<>();
 
-    public Livrator(String denumire) {
+    public Firma_livrare(String denumire) {
         this.denumire = denumire;
-        count_livratori++;
-        id_livrator = count_livratori;
+        count_firme_livrari++;
+        id_livrator = count_firme_livrari;
     }
 
-    public int getId_livrator() {
+    public Integer getId_livrator() {
         return id_livrator;
     }
 
