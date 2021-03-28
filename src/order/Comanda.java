@@ -10,7 +10,7 @@ public class Comanda {
     private Integer ID_user;
     private Integer ID_local;
     private Integer ID_firma_livrare;
-    private Integer pret = 0;
+    private Float pret = 0.0f;
     private List<Produs> produse = new ArrayList<>();
 
     public Comanda(Integer ID_comanda, Integer ID_user, Integer ID_local, Integer ID_firma_livrare) {
@@ -55,11 +55,11 @@ public class Comanda {
         this.ID_firma_livrare = ID_firma_livrare;
     }
 
-    public Integer getPret() {
+    public Float getPret() {
         return pret;
     }
 
-    public void setPret(Integer pret) {
+    public void setPret(Float pret) {
         this.pret = pret;
     }
 

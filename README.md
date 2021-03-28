@@ -18,7 +18,7 @@
 
 * Obiectele definite:
     * Curier
-    * Livrator
+    * Firma_livrare
     * Masina
     * Ingredient
     * Local

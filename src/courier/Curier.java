@@ -8,6 +8,9 @@ public class Curier extends Persoana{
     private Integer id_livrator;
     private Masina car;
 
+    public Curier() {
+    }
+
     public Curier(String nume, String prenume, String nr_telefon, Masina car) {
         super(nume, prenume, nr_telefon);
         this.car = car;
@@ -31,7 +34,7 @@ public class Curier extends Persoana{
 
     @Override
     public String toString() {
-        return "ID Livrator " + id_livrator + '\n' +
+        return "ID Firma Livrare " + id_livrator + '\n' +
                 "Nume " + nume + '\n' +
                 "Prenume " + prenume + '\n' +
                 "Numar telefon " + nr_telefon + '\n' +

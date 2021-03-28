@@ -32,4 +32,7 @@ public class Firma_livrare {
         curieri.add(c);
     }
 
+    public SortedSet<Curier> getCurieri() {
+        return curieri;
+    }
 }

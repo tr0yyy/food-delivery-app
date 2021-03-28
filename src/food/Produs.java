@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Produs {
     private String denumire;
-    private Integer pret;
+    private Float pret;
     private List<Ingredient> ingrediente = new ArrayList<Ingredient>();
 
     public Produs() {
     }
 
-    public Produs(String denumire, Integer pret, List<Ingredient> ingrediente) {
+    public Produs(String denumire, Float pret, List<Ingredient> ingrediente) {
         this.denumire = denumire;
         this.pret = pret;
         this.ingrediente = ingrediente;
@@ -25,11 +25,11 @@ public class Produs {
         this.denumire = denumire;
     }
 
-    public int getPret() {
+    public Float getPret() {
         return pret;
     }
 
-    public void setPret(Integer pret) {
+    public void setPret(Float pret) {
         this.pret = pret;
     }
 
@@ -45,5 +45,8 @@ public class Produs {
         ingrediente.add(i);
     }
 
-    
+    @Override
+    public String toString() {
+        return "Denumire produs: " + denumire + "\nPret: " + pret + "\nIngrediente: \n" + ingrediente;
+    }
 }

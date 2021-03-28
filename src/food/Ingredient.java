@@ -30,6 +30,6 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "Denumire: " + denumire + "\nCantitate: " + cantitate + "\n";
+        return "Denumire: " + denumire + ", Cantitate: " + cantitate + "\n";
     }
 }
