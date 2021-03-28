@@ -7,6 +7,8 @@ import person.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -70,6 +72,25 @@ public class Init {
             System.exit(0);
         }
         return my_new_restaurant;
+    }
+    public static ArrayList<User> users(String file_name, String file_path){
+        ArrayList<User> useri = new ArrayList<>();
+        try {
+            File my_file = new File(file_path+file_name);
+            Scanner scanner = new Scanner(my_file);
+            while (scanner.hasNextLine()) {
+                String data = scanner.nextLine();
+                String[] info_prod = data.split(",");
+                User u = new User(info_prod[0],info_prod[1],info_prod[2],info_prod[3],info_prod[4]);
+                useri.add(u);
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Lipseste fisierul de citire!");
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return useri;
     }
 
 }
