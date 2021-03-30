@@ -5,6 +5,7 @@ public class Masina {
     private final String model;
     private final String nr_inmatriculare;
 
+
     public Masina(String marca, String model, String nr_inmatriculare) {
         this.marca = marca;
         this.model = model;

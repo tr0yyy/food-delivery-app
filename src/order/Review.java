@@ -1,18 +1,22 @@
 package order;
 
 public class Review {
-    private Integer ID_Review;
-    private Integer ID_User;
+    static Integer count_reviewuri = 0;
+    private final Integer ID_Review;
+    private String username;
     private Integer ID_Comanda;
     private Integer stele;
     private String recenzie;
 
     public Review() {
+        count_reviewuri++;
+        this.ID_Review = count_reviewuri;
     }
 
-    public Review(Integer ID_Review, Integer ID_User, Integer ID_Comanda, Integer stele, String recenzie) {
-        this.ID_Review = ID_Review;
-        this.ID_User = ID_User;
+    public Review(Integer ID_Review, String username, Integer ID_Comanda, Integer stele, String recenzie) {
+        count_reviewuri++;
+        this.ID_Review = count_reviewuri;
+        this.username = username;
         this.ID_Comanda = ID_Comanda;
         this.stele = stele;
         this.recenzie = recenzie;
@@ -22,16 +26,12 @@ public class Review {
         return ID_Review;
     }
 
-    public void setID_Review(Integer ID_Review) {
-        this.ID_Review = ID_Review;
+    public String getUsername() {
+        return username;
     }
 
-    public Integer getID_User() {
-        return ID_User;
-    }
-
-    public void setID_User(Integer ID_User) {
-        this.ID_User = ID_User;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getID_Comanda() {

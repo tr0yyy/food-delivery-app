@@ -1,50 +1,49 @@
 package order;
 
-import food.Local;
 import food.Produs;
 
 import java.util.*;
 
 public class Comanda {
-    private Integer ID_comanda;
-    private Integer ID_user;
-    private Integer ID_local;
+    static int nr_comenzi = 0;
+    private final Integer ID_comanda;
+    private String username;
+    private String local;
     private Integer ID_firma_livrare;
     private Float pret = 0.0f;
     private List<Produs> produse = new ArrayList<>();
 
-    public Comanda(Integer ID_comanda, Integer ID_user, Integer ID_local, Integer ID_firma_livrare) {
-        this.ID_comanda = ID_comanda;
-        this.ID_user = ID_user;
-        this.ID_local = ID_local;
+    public Comanda(String username, String local, Integer ID_firma_livrare) {
+        nr_comenzi++;
+        this.ID_comanda = nr_comenzi;
+        this.username = username;
+        this.local = local;
         this.ID_firma_livrare = ID_firma_livrare;
     }
 
     public Comanda() {
+        nr_comenzi++;
+        this.ID_comanda = nr_comenzi;
     }
 
     public Integer getID_comanda() {
         return ID_comanda;
     }
 
-    public void setID_comanda(Integer ID_comanda) {
-        this.ID_comanda = ID_comanda;
+    public String getUsername() {
+        return username;
     }
 
-    public Integer getID_user() {
-        return ID_user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setID_user(Integer ID_user) {
-        this.ID_user = ID_user;
+    public String getLocal() {
+        return local;
     }
 
-    public Integer getID_local() {
-        return ID_local;
-    }
-
-    public void setID_local(Integer ID_local) {
-        this.ID_local = ID_local;
+    public void setLocal(String local) {
+        this.local = local;
     }
 
     public Integer getID_firma_livrare() {
@@ -74,5 +73,17 @@ public class Comanda {
     public void add_produse(Produs p){
         produse.add(p);
         pret = pret + p.getPret();
+    }
+
+    @Override
+    public String toString() {
+        return "Comanda{" +
+                "ID_comanda=" + ID_comanda +
+                ", username='" + username + '\'' +
+                ", local='" + local + '\'' +
+                ", ID_firma_livrare=" + ID_firma_livrare +
+                ", pret=" + pret +
+                ", produse=" + produse +
+                '}';
     }
 }
