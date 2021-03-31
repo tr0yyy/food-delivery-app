@@ -13,7 +13,7 @@ public class Main {
     public static void initMeniu(){
         System.out.println("--------------------NICOI ALEXANDRU // GRUPA 253 // ELEMENTE AVANSATE DE PROGRAMARE--------------------");
         System.out.println("-----------------------FOOD DELIVERY - ETAPA 1-----------------------");
-        System.out.println("-----------Pentru a utiliza o functie a meniului, tastati cifra corespunzatoare functiei alese-------------");
+        System.out.println("-----------Pentru a utiliza o functie a meniului, tastati numarul corespunzator functiei alese-------------");
         System.out.println();
         System.out.println("1. Adaugare curier in cadrul companiei de livrari.");
         System.out.println("2. Listare curieri care sunt angajati la un anumit livrator.");
@@ -39,6 +39,7 @@ public class Main {
         localuri.add(hercule);
         ArrayList<User> useri = Init.users("useri.txt","src/order/");
         List<Comanda> comenzi = new ArrayList<>();
+        List<Review> reviews = new ArrayList<>();
 
         ///the_real_main
         Scanner scanner = new Scanner(System.in);
@@ -90,6 +91,52 @@ public class Main {
                     }
                     if(!OK)
                         System.out.println("Produsul nu exista!");
+                    break;
+                case 5:
+                    Comanda c = Serviciu.plasare_comanda(localuri,useri);
+                    System.out.println("ID COMANDA: " + c.getID_comanda());
+                    System.out.println("Comanda plasata!");
+                    comenzi.add(c);
+                    break;
+                case 6:
+                    OK = false;
+                    System.out.println("Ce ID are comanda dvs? ");
+                    Integer id_Comanda = scanner.nextInt();
+                    for (Comanda comanda :
+                            comenzi) {
+                        if(comanda.getID_comanda() == id_Comanda){
+                            OK = true;
+                            Serviciu.addReview(comanda);
+                            break;
+                        }
+                    }
+                    if(!OK)
+                        System.out.println("Comanda nu exista!");
+                    break;
+                case 7:
+                    useri.add(Serviciu.addUser());
+                    System.out.println("User adaugat!");
+                    break;
+                case 8:
+                    System.out.println("Denumire produs: ");
+                    scanner.useDelimiter("\n");
+                    String choice = scanner.next();
+                    scanner.reset();
+                    Serviciu.searchProduct(choice, localuri);
+                    break;
+                case 9:
+                    System.out.println("Denumire oras: ");
+                    scanner.useDelimiter("\n");
+                    choice = scanner.next();
+                    scanner.reset();
+                    Serviciu.searchLocal(choice, localuri);
+                    break;
+                case 10:
+                    System.out.println("Username: ");
+                    scanner.useDelimiter("\n");
+                    choice = scanner.next();
+                    scanner.reset();
+                    Serviciu.searchAllOrders(choice, comenzi);
                     break;
                 case 0:
                     System.exit(0);

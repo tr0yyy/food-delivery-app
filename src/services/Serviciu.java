@@ -73,7 +73,7 @@ public class Serviciu {
         boolean OK = false;
         for (Local my_local :
                 localuri) {
-            if (local.equals(my_local.getDenumire())) {
+            if (local.equalsIgnoreCase(my_local.getDenumire())) {
                 OK = true;
                 System.out.println("Aici aveti produsele disponibile: ");
                 listare_produse(my_local);
