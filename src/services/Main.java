@@ -118,25 +118,25 @@ public class Main {
                     System.out.println("User adaugat!");
                     break;
                 case 8:
-                    System.out.println("Denumire produs: ");
+                    System.out.println("Username: ");
                     scanner.useDelimiter("\n");
                     String choice = scanner.next();
                     scanner.reset();
-                    Serviciu.searchProduct(choice, localuri);
+                    Serviciu.searchAllOrders(choice, comenzi);
                     break;
                 case 9:
+                    System.out.println("Denumire produs: ");
+                    scanner.useDelimiter("\n");
+                    choice = scanner.next();
+                    scanner.reset();
+                    Serviciu.searchProduct(choice, localuri);
+                    break;
+                case 10:
                     System.out.println("Denumire oras: ");
                     scanner.useDelimiter("\n");
                     choice = scanner.next();
                     scanner.reset();
                     Serviciu.searchLocal(choice, localuri);
-                    break;
-                case 10:
-                    System.out.println("Username: ");
-                    scanner.useDelimiter("\n");
-                    choice = scanner.next();
-                    scanner.reset();
-                    Serviciu.searchAllOrders(choice, comenzi);
                     break;
                 case 0:
                     System.exit(0);
