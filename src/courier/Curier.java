@@ -5,7 +5,7 @@ import person.Persoana;
 import java.util.Scanner;
 
 public class Curier extends Persoana{
-    private Integer id_livrator;
+    private Integer id_livrator = 0;
     private Masina car;
 
     public Curier() {
@@ -14,6 +14,12 @@ public class Curier extends Persoana{
     public Curier(String nume, String prenume, String nr_telefon, Masina car) {
         super(nume, prenume, nr_telefon);
         this.car = car;
+    }
+
+    public Curier(Curier curier) {
+        super(curier);
+        this.id_livrator = curier.id_livrator;
+        this.car = curier.car;
     }
 
     public Integer getId_livrator() {

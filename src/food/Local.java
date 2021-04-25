@@ -18,6 +18,13 @@ public class Local {
         this.oras = oras;
     }
 
+    public Local(Local local) {
+        this.denumire = local.denumire;
+        this.strada = local.strada;
+        this.oras = local.oras;
+        this.lista_produse = local.lista_produse;
+    }
+
     public String getDenumire() {
         return denumire;
     }

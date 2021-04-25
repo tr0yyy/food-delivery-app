@@ -9,6 +9,13 @@ public class Firma_livrare {
     private Integer id_livrator;
     private SortedSet<Curier> curieri = new TreeSet<>();
 
+    public Firma_livrare() {
+        count_firme_livrari++;
+        id_livrator = count_firme_livrari;
+    }
+
+
+
     public Firma_livrare(String denumire) {
         this.denumire = denumire;
         count_firme_livrari++;

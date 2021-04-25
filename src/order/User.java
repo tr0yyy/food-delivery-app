@@ -15,6 +15,12 @@ public class User extends Persoana {
         this.adresa = adresa;
     }
 
+    public User(User user) {
+        super(user);
+        this.username = user.username;
+        this.adresa = user.adresa;
+    }
+
     public String getUsername() {
         return username;
     }

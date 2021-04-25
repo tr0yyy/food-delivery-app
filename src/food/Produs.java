@@ -17,6 +17,12 @@ public class Produs {
         this.ingrediente = ingrediente;
     }
 
+    public Produs(Produs produs) {
+        this.denumire = produs.denumire;
+        this.pret = produs.pret;
+        this.ingrediente = produs.ingrediente;
+    }
+
     public String getDenumire() {
         return denumire;
     }
@@ -44,6 +50,7 @@ public class Produs {
     public void add_ingredient(Ingredient i){
         ingrediente.add(i);
     }
+
 
     @Override
     public String toString() {

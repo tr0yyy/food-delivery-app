@@ -12,6 +12,11 @@ public class Ingredient {
         this.cantitate = cantitate;
     }
 
+    public Ingredient(Ingredient ing) {
+        this.denumire = ing.denumire;
+        this.cantitate = ing.cantitate;
+    }
+
     public String getDenumire() {
         return denumire;
     }
@@ -27,6 +32,7 @@ public class Ingredient {
     public void setCantitate(Float cantitate) {
         this.cantitate = cantitate;
     }
+
 
     @Override
     public String toString() {

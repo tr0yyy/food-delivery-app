@@ -1,5 +1,7 @@
 package person;
 
+import order.User;
+
 public class Persoana implements Comparable<Persoana> {
     protected String nume;
     protected String prenume;
@@ -15,6 +17,12 @@ public class Persoana implements Comparable<Persoana> {
         this.nume = nume;
         this.prenume = prenume;
         this.nr_telefon = nr_telefon;
+    }
+
+    public Persoana(Persoana persoana) {
+        this.nume = persoana.nume;
+        this.prenume = persoana.prenume;
+        this.nr_telefon = persoana.nr_telefon;
     }
 
     public String getNume() {

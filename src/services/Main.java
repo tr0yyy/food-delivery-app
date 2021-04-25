@@ -7,12 +7,13 @@ import order.Comanda;
 import order.Review;
 import order.User;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
     public static void initMeniu(){
         System.out.println("--------------------NICOI ALEXANDRU // GRUPA 253 // ELEMENTE AVANSATE DE PROGRAMARE--------------------");
-        System.out.println("-----------------------FOOD DELIVERY - ETAPA 1-----------------------");
+        System.out.println("-----------------------FOOD DELIVERY - ETAPA 2-----------------------");
         System.out.println("-----------Pentru a utiliza o functie a meniului, tastati numarul corespunzator functiei alese-------------");
         System.out.println();
         System.out.println("1. Adaugare curier in cadrul companiei de livrari.");
@@ -27,20 +28,16 @@ public class Main {
         System.out.println("10. Cautare local in functie de oras.");
         System.out.println("0. Iesire.");
     }
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+        ArrayList<String> fisiereLocaluri = new ArrayList<>();
+        fisiereLocaluri.add("src/food/mcdonalds.csv");
+        fisiereLocaluri.add("src/food/kfc.csv");
+        fisiereLocaluri.add("src/food/hercule.csv");
+        ArrayList<Local> localuri = ReadFromCSV.ReadRestaurants(fisiereLocaluri);
+        //ReadFromCSV.ReadUsers();
         /// init data entries
-        Firma_livrare foodpanda = Init.firma_livrare("foodpanda.txt","src/courier/");
-        ArrayList<Local> localuri = new ArrayList<>();
-        //////McDonalds,Bd.Republicii,Ploiesti
-        Local mcdonalds = Init.restaurant("mcdonalds.csv","src/food/");
-        localuri.add(mcdonalds);
-        //////KFC,Str. Calomfirescu,Ploiesti
-        Local kfc = Init.restaurant("kfc.csv","src/food/");
-        localuri.add(kfc);
-        //////Hercule,DN1 KM.6,Blejoi
-        Local hercule = Init.restaurant("hercule.csv","src/food/");
-        localuri.add(hercule);
-        ArrayList<User> useri = Init.users("useri.csv","src/order/");
+        Firma_livrare foodpanda = ReadFromCSV.firma_livrare("src/courier/foodpanda.csv","FoodPanda");
+        ArrayList<User> useri = ReadFromCSV.ReadUsers("src/order/useri.csv");
         List<Comanda> comenzi = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
 

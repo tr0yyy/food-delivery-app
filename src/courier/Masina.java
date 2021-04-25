@@ -1,10 +1,30 @@
 package courier;
 
 public class Masina {
-    private final String marca;
-    private final String model;
-    private final String nr_inmatriculare;
+    private String marca;
+    private String model;
+    private String nr_inmatriculare;
 
+    public Masina() {
+    }
+
+    public Masina(Masina masina) {
+        marca = masina.marca;
+        model = masina.model;
+        nr_inmatriculare = masina.nr_inmatriculare;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public void setNr_inmatriculare(String nr_inmatriculare) {
+        this.nr_inmatriculare = nr_inmatriculare;
+    }
 
     public Masina(String marca, String model, String nr_inmatriculare) {
         this.marca = marca;
