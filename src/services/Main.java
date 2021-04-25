@@ -31,13 +31,16 @@ public class Main {
         /// init data entries
         Firma_livrare foodpanda = Init.firma_livrare("foodpanda.txt","src/courier/");
         ArrayList<Local> localuri = new ArrayList<>();
-        Local mcdonalds = Init.restaurant("mcdonalds.txt","src/food/");
+        //////McDonalds,Bd.Republicii,Ploiesti
+        Local mcdonalds = Init.restaurant("mcdonalds.csv","src/food/");
         localuri.add(mcdonalds);
-        Local kfc = Init.restaurant("kfc.txt","src/food/");
+        //////KFC,Str. Calomfirescu,Ploiesti
+        Local kfc = Init.restaurant("kfc.csv","src/food/");
         localuri.add(kfc);
-        Local hercule = Init.restaurant("hercule.txt","src/food/");
+        //////Hercule,DN1 KM.6,Blejoi
+        Local hercule = Init.restaurant("hercule.csv","src/food/");
         localuri.add(hercule);
-        ArrayList<User> useri = Init.users("useri.txt","src/order/");
+        ArrayList<User> useri = Init.users("useri.csv","src/order/");
         List<Comanda> comenzi = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
 
