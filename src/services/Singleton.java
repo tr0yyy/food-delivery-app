@@ -19,4 +19,5 @@ public class Singleton {
         }
         return (T)instance.mapBuffer.get(classOf);
     }
+
 }

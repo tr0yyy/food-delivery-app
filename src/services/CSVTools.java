@@ -6,16 +6,17 @@ import courier.Masina;
 import food.Ingredient;
 import food.Local;
 import food.Produs;
-import jdk.internal.dynalink.beans.StaticClass;
+import order.Comanda;
 import order.User;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-public class ReadFromCSV {
+/// ETAPA 2 - CITIRE SI SCRIERE IN FISIER FOLOSIND SINGLETON GENERIC
+/// ETAPA 2 - SERVICIU DE AUDIT
+public class CSVTools {
     public static ArrayList<Local> ReadRestaurants(List<String> fisiereLocaluri) throws InstantiationException, IllegalAccessException{
         ArrayList<Local> localuri = new ArrayList<>();
         Local bufferLocal = Singleton.getInstance(Local.class);
@@ -136,5 +137,46 @@ public class ReadFromCSV {
             System.exit(0);
         }
         return firmaLivrare;
+    }
+
+
+    public static void WriteOrderToFile(Comanda c, String file_path) throws InstantiationException, IllegalAccessException, IOException {
+        File verif = new File(file_path);
+        boolean exists = verif.isFile();
+        Comanda cache = Singleton.getInstance(Comanda.class);
+        cache.setUsername(c.getUsername());
+        cache.setLocal(c.getLocal());
+        cache.setPret(c.getPret());
+        cache.setID_firma_livrare(c.getID_firma_livrare());
+        cache.setID_comanda(c.getID_comanda());
+        FileWriter fw = new FileWriter(file_path, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bw);
+        if(!exists){
+            out.println("ID Comanda,Username,Local,ID Firma Livrare,Pret");
+            /// aici scriu headerul
+        }
+        out.println(cache.getID_comanda()+","+cache.getUsername()+","+cache.getLocal()+","+cache.getID_firma_livrare()+","+cache.getPret());
+        out.close();
+    }
+
+    public static void auditComanda(String file_path, Comanda c) throws IOException {
+        File verif = new File(file_path);
+        boolean exists = verif.isFile();
+        /// fac aceasta verificare in cazul in care nu exista fisierul audit.csv
+        /// pentru a scrie headerul fisierului csv
+        FileWriter fw = new FileWriter(file_path, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bw);
+        if(!exists){
+            out.println("nume_actiune,timestamp");
+            /// aici scriu headerul
+        }
+        /// aici scriu informatiile despre actiunea de plasare comanda in fisierul csv
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String strDate = dateFormat.format(date);
+        out.println("PLASARE COMANDA LOCAL " + c.getLocal() + " DE CATRE USER " + c.getUsername() + "," + strDate);
+        out.close();
     }
 }

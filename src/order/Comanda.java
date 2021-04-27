@@ -6,12 +6,14 @@ import java.util.*;
 
 public class Comanda {
     static int nr_comenzi = 0;
-    private final Integer ID_comanda;
+    private Integer ID_comanda;
     private String username;
     private String local;
     private Integer ID_firma_livrare;
     private Float pret = 0.0f;
     private List<Produs> produse = new ArrayList<>();
+
+
 
     public Comanda(String username, String local, Integer ID_firma_livrare) {
         nr_comenzi++;
@@ -24,6 +26,10 @@ public class Comanda {
     public Comanda() {
         nr_comenzi++;
         this.ID_comanda = nr_comenzi;
+    }
+
+    public void setID_comanda(Integer ID_comanda) {
+        this.ID_comanda = ID_comanda;
     }
 
     public Integer getID_comanda() {

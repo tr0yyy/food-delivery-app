@@ -1,0 +1,18 @@
+Nume Gica
+Prenume Georgel
+Numar telefon 0746195138
+Username Gica123
+Adresa Strada Apelor nr 6
+
+Nume Achimescu
+Prenume Valentin
+Numar telefon 0743532124
+Username Achime11
+Adresa Strada Grui nr 5
+
+Nume Stana
+Prenume Theodora
+Numar telefon 0745423145
+Username Theoss
+Adresa Strada Rezervelor nr 7
+

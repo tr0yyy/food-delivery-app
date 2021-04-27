@@ -7,7 +7,10 @@ import order.Comanda;
 import order.Review;
 import order.User;
 
-import java.lang.reflect.Array;
+import javax.sound.midi.Soundbank;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class Main {
@@ -33,13 +36,15 @@ public class Main {
         fisiereLocaluri.add("src/food/mcdonalds.csv");
         fisiereLocaluri.add("src/food/kfc.csv");
         fisiereLocaluri.add("src/food/hercule.csv");
-        ArrayList<Local> localuri = ReadFromCSV.ReadRestaurants(fisiereLocaluri);
+        ArrayList<Local> localuri = CSVTools.ReadRestaurants(fisiereLocaluri);
         //ReadFromCSV.ReadUsers();
         /// init data entries
-        Firma_livrare foodpanda = ReadFromCSV.firma_livrare("src/courier/foodpanda.csv","FoodPanda");
-        ArrayList<User> useri = ReadFromCSV.ReadUsers("src/order/useri.csv");
+        Firma_livrare foodpanda = CSVTools.firma_livrare("src/courier/foodpanda.csv","FoodPanda");
+        ArrayList<User> useri = CSVTools.ReadUsers("src/order/useri.csv");
         List<Comanda> comenzi = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
+
+
 
         ///the_real_main
         Scanner scanner = new Scanner(System.in);
@@ -94,8 +99,19 @@ public class Main {
                     break;
                 case 5:
                     Comanda c = Serviciu.plasare_comanda(localuri,useri);
-                    System.out.println("ID COMANDA: " + c.getID_comanda());
-                    System.out.println("Comanda plasata!");
+                    try {
+                        File myFile = new File("src/comenzi.csv");
+                        if(myFile.exists())
+                            if(!myFile.delete())
+                            {
+                                System.out.println("Fisierul este de tip Read-Only!");
+                                break;
+                            }
+                        CSVTools.WriteOrderToFile(c, "src/comenzi.csv");
+                        CSVTools.auditComanda("src/audit.csv", c);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     comenzi.add(c);
                     break;
                 case 6:
