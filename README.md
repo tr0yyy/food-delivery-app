@@ -27,5 +27,11 @@
     * Review
     * User
     * Persoana
-    
+  
+---
+ETAPA 2
+
+* Noile clase definite pentru aceasta etapa:
+    * services.CSVTools
+    * services.Singleton
 
