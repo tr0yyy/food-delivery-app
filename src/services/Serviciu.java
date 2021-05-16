@@ -10,10 +10,161 @@ import order.Comanda;
 import order.Review;
 import order.User;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 public class Serviciu {
-    public static void adaugareCurier(FirmaLivrare self){
+    public Serviciu(){
+    }
+
+    private void initMeniu(){
+        System.out.println("--------------------NICOI ALEXANDRU // GRUPA 253 // ELEMENTE AVANSATE DE PROGRAMARE--------------------");
+        System.out.println("-----------------------FOOD DELIVERY - ETAPA 2-----------------------");
+        System.out.println("-----------Pentru a utiliza o functie a meniului, tastati numarul corespunzator functiei alese-------------");
+        System.out.println();
+        System.out.println("1. Adaugare curier in cadrul companiei de livrari.");
+        System.out.println("2. Listare produse specifice unui local.");
+        System.out.println("3. Listare ingrediente dintr-un produs.");
+        System.out.println("4. Plasare comanda.");
+        System.out.println("5. Adaugare review asupra comenzii.");
+        System.out.println("6. Adaugare User care va folosi platforma.");
+        System.out.println("7. Listare comenzi plasate de catre un anumit user.");
+        System.out.println("8. Cautare un anumit produs in mai multe localuri.");
+        System.out.println("9. Cautare local in functie de oras.");
+        System.out.println("0. Iesire.");
+    }
+
+    public void executeServices() throws InstantiationException, IllegalAccessException{
+        ArrayList<String> fisiereLocaluri = new ArrayList<>();
+        fisiereLocaluri.add("src/food/mcdonalds.csv");
+        fisiereLocaluri.add("src/food/kfc.csv");
+        fisiereLocaluri.add("src/food/hercule.csv");
+        CSVTools myCSVTool = new CSVTools();
+        ArrayList<Local> localuri = myCSVTool.readRestaurants(fisiereLocaluri);
+        //ReadFromCSV.ReadUsers();
+        /// init data entries
+        FirmaLivrare foodpanda = myCSVTool.readFirmaLivrare("src/courier/foodpanda.csv","FoodPanda");
+        ArrayList<User> useri = myCSVTool.readUsers("src/order/useri.csv");
+        List<Comanda> comenzi = new ArrayList<>();
+        List<Review> reviews = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+        int opt;
+        initMeniu();
+        do {
+            System.out.println("\n");
+            System.out.println("Optiunea aleasa: ");
+            opt = scanner.nextInt();
+            switch (opt)
+            {
+                case 1:
+                    adaugareCurier(foodpanda);
+                    System.out.println("Curier adaugat");
+                    break;
+                case 2:
+                    boolean OK = false;
+                    System.out.println("Selecteaza localul:");
+                    String localStr = scanner.next();
+                    for (Local local:
+                            localuri) {
+                        if(local.getDenumire().equalsIgnoreCase(localStr))
+                        {
+                            List<Produs> produse = local.getListaProduse();
+                            for(Produs produs : produse)
+                                System.out.println(produs);
+                            OK = true;
+                            break;
+                        }
+                    }
+                    if(!OK)
+                        System.out.println("Localul nu exista!");
+                    break;
+                case 3:
+                    OK = false;
+                    System.out.println("Selecteaza produsul:");
+                    String produsStr = scanner.next();
+                    for (Local local :
+                            localuri) {
+                        for (Produs produs :
+                                local.getListaProduse()) {
+                            if(produsStr.equalsIgnoreCase(produs.getDenumire())){
+                                OK = true;
+                                listareIngrediente(produs);
+                                break;
+                            }
+                        }
+                    }
+                    if(!OK)
+                        System.out.println("Produsul nu exista!");
+                    break;
+                case 4:
+                    Comanda c = plasareComanda(localuri,useri);
+                    try {
+                        File myFile = new File("src/comenzi.csv");
+                        if(myFile.exists())
+                            if(!myFile.delete())
+                            {
+                                System.out.println("Fisierul este de tip Read-Only!");
+                                break;
+                            }
+                        myCSVTool.writeOrderToFile(c, "src/comenzi.csv");
+                        myCSVTool.auditComanda("src/audit.csv", c);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    comenzi.add(c);
+                    break;
+                case 5:
+                    OK = false;
+                    System.out.println("Ce ID are comanda dvs? ");
+                    Integer idComanda = scanner.nextInt();
+                    for (Comanda comanda :
+                            comenzi) {
+                        if(comanda.getIDComanda().equals(idComanda)){
+                            OK = true;
+                            addReview(comanda);
+                            break;
+                        }
+                    }
+                    if(!OK)
+                        System.out.println("Comanda nu exista!");
+                    break;
+                case 6:
+                    useri.add(addUser());
+                    System.out.println("User adaugat!");
+                    break;
+                case 7:
+                    System.out.println("Username: ");
+                    scanner.useDelimiter("\n");
+                    String choice = scanner.next();
+                    scanner.reset();
+                    searchAllOrders(choice, comenzi);
+                    break;
+                case 8:
+                    System.out.println("Denumire produs: ");
+                    scanner.useDelimiter("\n");
+                    choice = scanner.next();
+                    scanner.reset();
+                    Produs myProdus = searchProduct(choice, localuri);
+                    break;
+                case 9:
+                    System.out.println("Denumire oras: ");
+                    scanner.useDelimiter("\n");
+                    choice = scanner.next();
+                    scanner.reset();
+                    Local myLocal = searchLocal(choice, localuri);
+                    break;
+                case 0:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("OPTIUNE INVALIDA!");
+            }
+        }while(opt != 0);
+    }
+
+    private void adaugareCurier(FirmaLivrare self){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nume: ");
         String nume = scanner.next();
@@ -32,12 +183,12 @@ public class Serviciu {
         c.setIdLivrator(self.getIdLivrator());
         self.addCurier(c);
     }
-    public static void listareIngrediente(Produs self){
+    private void listareIngrediente(Produs self){
         List<Ingredient> ingrediente = self.getIngrediente();
         for(Ingredient ingredient : ingrediente)
             System.out.println(ingredient);
     }
-    public static Comanda plasareComanda(ArrayList<Local> localuri, ArrayList<User> useri){
+    private Comanda plasareComanda(ArrayList<Local> localuri, ArrayList<User> useri){
         Comanda c = new Comanda();
         Scanner scanner = new Scanner(System.in);
         boolean OKUser = false;
@@ -102,7 +253,7 @@ public class Serviciu {
         System.out.println("PRET FINAL COMANDA: " + c.getPret());
         return c;
     }
-    public static Review addReview(Comanda c){
+    private Review addReview(Comanda c){
         Review myRev = new Review();
         myRev.setUsername(c.getUsername());
         myRev.setIdComanda(c.getIDComanda());
@@ -117,7 +268,7 @@ public class Serviciu {
         myRev.setStele(stele);
         return myRev;
     }
-    public static User addUser(){
+    private User addUser(){
         //String nume, String prenume, String nr_telefon, String username, String adresa
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nume: ");
@@ -134,7 +285,8 @@ public class Serviciu {
         scanner.reset();
         return new User(nume,prenume,nrTel,username,adresa);
     }
-    public static void searchProduct(String denumireProdus, ArrayList<Local> localuri){
+    /// Dau localuri ca parametru deoarece vectorul de localuri este preluat din metoda executeServices()
+    private Produs searchProduct(String denumireProdus, ArrayList<Local> localuri){
         boolean OK = false;
         for (Local local :
                 localuri) {
@@ -143,26 +295,26 @@ public class Serviciu {
                     produseLocal) {
                 if(produs.getDenumire().equalsIgnoreCase(denumireProdus)) {
                     System.out.println("PRODUS GASIT IN LOCALUL " + local.getDenumire());
-                    OK = true;
+                    return produs;
                 }
             }
         }
-        if(!OK)
-            System.out.println("PRODUSUL NU A FOST GASIT IN NICIUN LOCAL!");
+        System.out.println("PRODUSUL NU A FOST GASIT IN NICIUN LOCAL!");
+        return null;
     }
-    public static void searchLocal(String oras, ArrayList<Local> localuri){
-        boolean OK = false;
+    /// Dau localuri ca parametru deoarece vectorul de localuri este preluat din metoda executeServices()
+    private Local searchLocal(String oras, ArrayList<Local> localuri){
         for (Local local :
                 localuri) {
             if (local.getOras().equalsIgnoreCase(oras)){
                 System.out.println(local.getDenumire() + " ");
-                OK = true;
+                return local;
             }
         }
-        if(!OK)
-            System.out.println("Nu exista niciun local in orasul " + oras);
+        System.out.println("Nu exista niciun local in orasul " + oras);
+        return null;
     }
-    public static void searchAllOrders(String username, List<Comanda> comenzi){
+    private void searchAllOrders(String username, List<Comanda> comenzi){
         boolean OK = false;
         for (Comanda comanda :
                 comenzi) {

@@ -17,7 +17,7 @@ import java.util.*;
 /// ETAPA 2 - CITIRE SI SCRIERE IN FISIER FOLOSIND SINGLETON GENERIC
 /// ETAPA 2 - SERVICIU DE AUDIT
 public class CSVTools {
-    public static ArrayList<Local> readRestaurants(List<String> fisiereLocaluri) throws InstantiationException, IllegalAccessException{
+    public ArrayList<Local> readRestaurants(List<String> fisiereLocaluri) throws InstantiationException, IllegalAccessException{
         ArrayList<Local> localuri = new ArrayList<>();
         Local bufferLocal = Singleton.getInstance(Local.class);
         Produs bufferProdus = Singleton.getInstance(Produs.class);
@@ -76,7 +76,7 @@ public class CSVTools {
         }
         return localuri;
     }
-    public static ArrayList<User> readUsers(String filePath) throws InstantiationException, IllegalAccessException{
+    public ArrayList<User> readUsers(String filePath) throws InstantiationException, IllegalAccessException{
         ArrayList<User> useri = new ArrayList<>();
         User userBuffer = Singleton.getInstance(User.class);
         try {
@@ -101,7 +101,7 @@ public class CSVTools {
         }
         return useri;
     }
-    public static FirmaLivrare readFirmaLivrare(String filePath, String denumire) throws InstantiationException, IllegalAccessException {
+    public FirmaLivrare readFirmaLivrare(String filePath, String denumire) throws InstantiationException, IllegalAccessException {
         FirmaLivrare firmaLivrare = new FirmaLivrare();
         Masina masinaBuffer = Singleton.getInstance(Masina.class);
         Curier curierBuffer = Singleton.getInstance(Curier.class);
@@ -140,7 +140,7 @@ public class CSVTools {
     }
 
 
-    public static void writeOrderToFile(Comanda c, String filePath) throws InstantiationException, IllegalAccessException, IOException {
+    public void writeOrderToFile(Comanda c, String filePath) throws InstantiationException, IllegalAccessException, IOException {
         File verif = new File(filePath);
         boolean exists = verif.isFile();
         Comanda cache = Singleton.getInstance(Comanda.class);
@@ -160,7 +160,7 @@ public class CSVTools {
         out.close();
     }
 
-    public static void auditComanda(String filePath, Comanda c) throws IOException {
+    public void auditComanda(String filePath, Comanda c) throws IOException {
         File verif = new File(filePath);
         boolean exists = verif.isFile();
         /// fac aceasta verificare in cazul in care nu exista fisierul audit.csv
