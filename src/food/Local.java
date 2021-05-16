@@ -7,7 +7,7 @@ public class Local {
     private String denumire;
     private String strada;
     private String oras;
-    private List<Produs> lista_produse = new ArrayList<Produs>();
+    private List<Produs> listaProduse = new ArrayList<Produs>();
 
     public Local() {
     }
@@ -22,7 +22,7 @@ public class Local {
         this.denumire = local.denumire;
         this.strada = local.strada;
         this.oras = local.oras;
-        this.lista_produse = local.lista_produse;
+        this.listaProduse = local.listaProduse;
     }
 
     public String getDenumire() {
@@ -49,16 +49,16 @@ public class Local {
         this.oras = oras;
     }
 
-    public List<Produs> getLista_produse() {
-        return lista_produse;
+    public List<Produs> getListaProduse() {
+        return listaProduse;
     }
 
-    public void setLista_produse(List<Produs> lista_produse) {
-        this.lista_produse = lista_produse;
+    public void setListaProduse(List<Produs> listaProduse) {
+        this.listaProduse = listaProduse;
     }
 
-    public void add_produs(Produs p){
-        lista_produse.add(p);
+    public void addProdus(Produs p){
+        listaProduse.add(p);
     }
 
 

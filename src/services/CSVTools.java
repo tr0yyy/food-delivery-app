@@ -1,7 +1,7 @@
 package services;
 
 import courier.Curier;
-import courier.Firma_livrare;
+import courier.FirmaLivrare;
 import courier.Masina;
 import food.Ingredient;
 import food.Local;
@@ -17,7 +17,7 @@ import java.util.*;
 /// ETAPA 2 - CITIRE SI SCRIERE IN FISIER FOLOSIND SINGLETON GENERIC
 /// ETAPA 2 - SERVICIU DE AUDIT
 public class CSVTools {
-    public static ArrayList<Local> ReadRestaurants(List<String> fisiereLocaluri) throws InstantiationException, IllegalAccessException{
+    public static ArrayList<Local> readRestaurants(List<String> fisiereLocaluri) throws InstantiationException, IllegalAccessException{
         ArrayList<Local> localuri = new ArrayList<>();
         Local bufferLocal = Singleton.getInstance(Local.class);
         Produs bufferProdus = Singleton.getInstance(Produs.class);
@@ -42,30 +42,30 @@ public class CSVTools {
              fisiereLocaluri) {
             k++;
             try {
-                File my_file = new File(file);
-                Scanner scanner = new Scanner(my_file);
+                File myFile = new File(file);
+                Scanner scanner = new Scanner(myFile);
                 /// initializare date de baza
                 String data = scanner.nextLine();
-                String[] info_r = data.split(",");
+                String[] infoR = data.split(",");
                 bufferLocal.setDenumire(localuriInfo.get(k)[0]);
                 bufferLocal.setStrada(localuriInfo.get(k)[1]);
                 bufferLocal.setOras(localuriInfo.get(k)[2]);
                 List<Produs> produse = new ArrayList<Produs>();
                 while (scanner.hasNextLine()) {
                     data = scanner.nextLine();
-                    String[] info_prod = data.split(",");
-                    bufferProdus.setDenumire(info_prod[0]);
-                    bufferProdus.setPret(Float.parseFloat(info_prod[1]));
+                    String[] infoProd = data.split(",");
+                    bufferProdus.setDenumire(infoProd[0]);
+                    bufferProdus.setPret(Float.parseFloat(infoProd[1]));
                     List<Ingredient> ingrediente = new ArrayList<>();
-                    for(int i = 2 ; i < info_prod.length ; i+=2){
-                        ing.setDenumire(info_prod[i]);
-                        ing.setCantitate(Float.parseFloat(info_prod[i+1]));
+                    for(int i = 2 ; i < infoProd.length ; i+=2){
+                        ing.setDenumire(infoProd[i]);
+                        ing.setCantitate(Float.parseFloat(infoProd[i+1]));
                         ingrediente.add(new Ingredient(ing));
                     }
                     bufferProdus.setIngrediente(ingrediente);
                     produse.add(new Produs(bufferProdus));
                 }
-                bufferLocal.setLista_produse(produse);
+                bufferLocal.setListaProduse(produse);
                 scanner.close();
                 localuri.add(new Local(bufferLocal));
             } catch (FileNotFoundException e) {
@@ -76,21 +76,21 @@ public class CSVTools {
         }
         return localuri;
     }
-    public static ArrayList<User> ReadUsers(String file_path) throws InstantiationException, IllegalAccessException{
+    public static ArrayList<User> readUsers(String filePath) throws InstantiationException, IllegalAccessException{
         ArrayList<User> useri = new ArrayList<>();
         User userBuffer = Singleton.getInstance(User.class);
         try {
-            File my_file = new File(file_path);
+            File my_file = new File(filePath);
             Scanner scanner = new Scanner(my_file);
             String data = scanner.nextLine();
             while (scanner.hasNextLine()) {
                 data = scanner.nextLine();
-                String[] info_prod = data.split(",");
-                userBuffer.setNume(info_prod[0]);
-                userBuffer.setPrenume(info_prod[1]);
-                userBuffer.setNr_telefon(info_prod[2]);
-                userBuffer.setUsername(info_prod[3]);
-                userBuffer.setAdresa(info_prod[4]);
+                String[] infoProd = data.split(",");
+                userBuffer.setNume(infoProd[0]);
+                userBuffer.setPrenume(infoProd[1]);
+                userBuffer.setNrTelefon(infoProd[2]);
+                userBuffer.setUsername(infoProd[3]);
+                userBuffer.setAdresa(infoProd[4]);
                 useri.add(new User(userBuffer));
             }
             scanner.close();
@@ -101,12 +101,12 @@ public class CSVTools {
         }
         return useri;
     }
-    public static Firma_livrare firma_livrare(String file_path, String denumire) throws InstantiationException, IllegalAccessException {
-        Firma_livrare firmaLivrare = new Firma_livrare();
+    public static FirmaLivrare readFirmaLivrare(String filePath, String denumire) throws InstantiationException, IllegalAccessException {
+        FirmaLivrare firmaLivrare = new FirmaLivrare();
         Masina masinaBuffer = Singleton.getInstance(Masina.class);
         Curier curierBuffer = Singleton.getInstance(Curier.class);
         try {
-            File my_file = new File(file_path);
+            File my_file = new File(filePath);
             Scanner scanner = new Scanner(my_file);
             String data = scanner.nextLine();
             while (scanner.hasNextLine()) {
@@ -120,14 +120,14 @@ public class CSVTools {
                 String nr_inm = curier[5];
                 masinaBuffer.setMarca(marca);
                 masinaBuffer.setModel(model);
-                masinaBuffer.setNr_inmatriculare(nr_inm);
+                masinaBuffer.setNrInmatriculare(nr_inm);
                 curierBuffer.setNume(nume);
                 curierBuffer.setPrenume(prenume);
-                curierBuffer.setNr_telefon(telefon);
+                curierBuffer.setNrTelefon(telefon);
                 curierBuffer.setCar(new Masina(masinaBuffer));
-                curierBuffer.setId_livrator(firmaLivrare.getId_livrator());
+                curierBuffer.setIdLivrator(firmaLivrare.getIdLivrator());
                 firmaLivrare.setDenumire(denumire);
-                firmaLivrare.add_curier(new Curier(curierBuffer));
+                firmaLivrare.addCurier(new Curier(curierBuffer));
             }
             scanner.close();
 
@@ -140,32 +140,32 @@ public class CSVTools {
     }
 
 
-    public static void WriteOrderToFile(Comanda c, String file_path) throws InstantiationException, IllegalAccessException, IOException {
-        File verif = new File(file_path);
+    public static void writeOrderToFile(Comanda c, String filePath) throws InstantiationException, IllegalAccessException, IOException {
+        File verif = new File(filePath);
         boolean exists = verif.isFile();
         Comanda cache = Singleton.getInstance(Comanda.class);
         cache.setUsername(c.getUsername());
         cache.setLocal(c.getLocal());
         cache.setPret(c.getPret());
-        cache.setID_firma_livrare(c.getID_firma_livrare());
-        cache.setID_comanda(c.getID_comanda());
-        FileWriter fw = new FileWriter(file_path, true);
+        cache.setIDFirmaLivrare(c.getIDFirmaLivrare());
+        cache.setIDComanda(c.getIDComanda());
+        FileWriter fw = new FileWriter(filePath, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw);
         if(!exists){
             out.println("ID Comanda,Username,Local,ID Firma Livrare,Pret");
             /// aici scriu headerul
         }
-        out.println(cache.getID_comanda()+","+cache.getUsername()+","+cache.getLocal()+","+cache.getID_firma_livrare()+","+cache.getPret());
+        out.println(cache.getIDComanda()+","+cache.getUsername()+","+cache.getLocal()+","+cache.getIDFirmaLivrare()+","+cache.getPret());
         out.close();
     }
 
-    public static void auditComanda(String file_path, Comanda c) throws IOException {
-        File verif = new File(file_path);
+    public static void auditComanda(String filePath, Comanda c) throws IOException {
+        File verif = new File(filePath);
         boolean exists = verif.isFile();
         /// fac aceasta verificare in cazul in care nu exista fisierul audit.csv
         /// pentru a scrie headerul fisierului csv
-        FileWriter fw = new FileWriter(file_path, true);
+        FileWriter fw = new FileWriter(filePath, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw);
         if(!exists){

@@ -3,7 +3,7 @@ package courier;
 public class Masina {
     private String marca;
     private String model;
-    private String nr_inmatriculare;
+    private String nrInmatriculare;
 
     public Masina() {
     }
@@ -11,7 +11,7 @@ public class Masina {
     public Masina(Masina masina) {
         marca = masina.marca;
         model = masina.model;
-        nr_inmatriculare = masina.nr_inmatriculare;
+        nrInmatriculare = masina.nrInmatriculare;
     }
 
     public void setMarca(String marca) {
@@ -22,14 +22,14 @@ public class Masina {
         this.model = model;
     }
 
-    public void setNr_inmatriculare(String nr_inmatriculare) {
-        this.nr_inmatriculare = nr_inmatriculare;
+    public void setNrInmatriculare(String nrInmatriculare) {
+        this.nrInmatriculare = nrInmatriculare;
     }
 
-    public Masina(String marca, String model, String nr_inmatriculare) {
+    public Masina(String marca, String model, String nrInmatriculare) {
         this.marca = marca;
         this.model = model;
-        this.nr_inmatriculare = nr_inmatriculare;
+        this.nrInmatriculare = nrInmatriculare;
     }
 
     public String getMarca() {
@@ -40,8 +40,8 @@ public class Masina {
         return model;
     }
 
-    public String getNr_inmatriculare() {
-        return nr_inmatriculare;
+    public String getNrInmatriculare() {
+        return nrInmatriculare;
     }
 
     @Override
@@ -49,6 +49,6 @@ public class Masina {
         return
                 "marca '" + marca + '\'' +
                 ", model '" + model + '\'' +
-                ", nr_inmatriculare '" + nr_inmatriculare + '\'';
+                ", nr_inmatriculare '" + nrInmatriculare + '\'';
     }
 }

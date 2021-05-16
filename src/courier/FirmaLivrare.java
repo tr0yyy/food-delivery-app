@@ -3,27 +3,27 @@ package courier;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-public class Firma_livrare {
-    private static Integer count_firme_livrari = 0;
+public class FirmaLivrare {
+    private static Integer countFirmeLivrari = 0;
     private String denumire;
-    private Integer id_livrator;
+    private Integer idLivrator;
     private SortedSet<Curier> curieri = new TreeSet<>();
 
-    public Firma_livrare() {
-        count_firme_livrari++;
-        id_livrator = count_firme_livrari;
+    public FirmaLivrare() {
+        countFirmeLivrari++;
+        idLivrator = countFirmeLivrari;
     }
 
 
 
-    public Firma_livrare(String denumire) {
+    public FirmaLivrare(String denumire) {
         this.denumire = denumire;
-        count_firme_livrari++;
-        id_livrator = count_firme_livrari;
+        countFirmeLivrari++;
+        idLivrator = countFirmeLivrari;
     }
 
-    public Integer getId_livrator() {
-        return id_livrator;
+    public Integer getIdLivrator() {
+        return idLivrator;
     }
 
     public String getDenumire() {
@@ -34,8 +34,8 @@ public class Firma_livrare {
         this.denumire = denumire;
     }
 
-    public void add_curier(Curier c){
-        c.setId_livrator(id_livrator);
+    public void addCurier(Curier c){
+        c.setIdLivrator(idLivrator);
         curieri.add(c);
     }
 

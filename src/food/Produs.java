@@ -47,7 +47,7 @@ public class Produs {
         this.ingrediente = ingrediente;
     }
 
-    public void add_ingredient(Ingredient i){
+    public void addIngredient(Ingredient i){
         ingrediente.add(i);
     }
 

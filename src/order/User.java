@@ -41,7 +41,7 @@ public class User extends Persoana {
     public String toString() {
         return "Nume " + nume + '\n' +
                 "Prenume " + prenume + '\n' +
-                "Numar telefon " + nr_telefon + '\n' +
+                "Numar telefon " + nrTelefon + '\n' +
                 "Username " + username + '\n' +
                 "Adresa " + adresa + '\n';
     }

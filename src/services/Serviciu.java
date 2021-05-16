@@ -1,7 +1,7 @@
 package services;
 
 import courier.Curier;
-import courier.Firma_livrare;
+import courier.FirmaLivrare;
 import courier.Masina;
 import food.Ingredient;
 import food.Local;
@@ -10,90 +10,78 @@ import order.Comanda;
 import order.Review;
 import order.User;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Serviciu {
-    public static void adaugare_curier(Firma_livrare self){
+    public static void adaugareCurier(FirmaLivrare self){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Nume: ");
         String nume = scanner.next();
         System.out.print("Prenume: ");
         String prenume = scanner.next();
         System.out.print("Nr telefon: ");
-        String nr_tel = scanner.next();
+        String nrTel = scanner.next();
         System.out.print("Marca: ");
         String marca = scanner.next();
         System.out.print("Model: ");
         String model = scanner.next();
         System.out.print("Nr inmatriculare: ");
-        String nr_inm = scanner.next();
-        Masina m = new Masina(marca, model, nr_inm);
-        Curier c = new Curier(nume, prenume, nr_tel, m);
-        c.setId_livrator(self.getId_livrator());
-        self.add_curier(c);
+        String nrInm = scanner.next();
+        Masina m = new Masina(marca, model, nrInm);
+        Curier c = new Curier(nume, prenume, nrTel, m);
+        c.setIdLivrator(self.getIdLivrator());
+        self.addCurier(c);
     }
-    public static void listare_curieri(Firma_livrare self){
-        SortedSet<Curier> curieri = self.getCurieri();
-        for(Curier curier : curieri)
-            System.out.println(curier);
-    }
-    public static void listare_produse(Local self){
-        List<Produs> produse = self.getLista_produse();
-        for(Produs produs : produse)
-            System.out.println(produs);
-    }
-    public static void listare_ingrediente(Produs self){
+    public static void listareIngrediente(Produs self){
         List<Ingredient> ingrediente = self.getIngrediente();
         for(Ingredient ingredient : ingrediente)
             System.out.println(ingredient);
     }
-    public static Comanda plasare_comanda(ArrayList<Local> localuri, ArrayList<User> useri){
+    public static Comanda plasareComanda(ArrayList<Local> localuri, ArrayList<User> useri){
         Comanda c = new Comanda();
         Scanner scanner = new Scanner(System.in);
-        boolean OK_User = false;
+        boolean OKUser = false;
         String username = "";
-        while(!OK_User){
+        while(!OKUser){
             System.out.print("Username: ");
             username = scanner.next();
             for (User user : useri)
                 if(username.equalsIgnoreCase(user.getUsername())){
-                    OK_User = true;
+                    OKUser = true;
                     break;}
-            if(!OK_User)
+            if(!OKUser)
                 System.out.println("Username negasit in baza de date de useri!");}
         System.out.print("Local: ");
         String local = scanner.next();
         System.out.print("ID Firma livrare: ");
-        Integer id_firma = scanner.nextInt();
+        Integer idFirma = scanner.nextInt();
         Float pret = 0.f;
         boolean OK = false;
-        for (Local my_local :
+        for (Local myLocal :
                 localuri) {
-            if (local.equalsIgnoreCase(my_local.getDenumire())) {
+            if (local.equalsIgnoreCase(myLocal.getDenumire())) {
                 OK = true;
                 System.out.println("Aici aveti produsele disponibile: ");
-                listare_produse(my_local);
+                List<Produs> produse = myLocal.getListaProduse();
+                for(Produs produs : produse)
+                    System.out.println(produs);
                 while (true) {
                     System.out.println("Alegeti un produs:");
                     scanner.useDelimiter("\n");
                     String choice = scanner.next();
                     scanner.reset();
-                    boolean OK_Produs = false;
+                    boolean OKProdus = false;
                     for (Produs p :
-                            my_local.getLista_produse()){
+                            myLocal.getListaProduse()){
                         if (choice.equalsIgnoreCase(p.getDenumire())) {
-                            c.add_produse(p);
+                            c.addProduse(p);
                             pret += p.getPret();
-                            OK_Produs = true;
+                            OKProdus = true;
                         }
-                        if(OK_Produs)
+                        if(OKProdus)
                             break;
                     }
-                    if(!OK_Produs)
+                    if(!OKProdus)
                         System.out.println("Produsul nu se afla in lista localului! Doriti sa cautati alt produs? Y/N");
                     else
                         System.out.println("Doriti sa cautati alt produs? Y/N");
@@ -110,14 +98,14 @@ public class Serviciu {
         c.setUsername(username);
         c.setLocal(local);
         c.setPret(pret);
-        c.setID_firma_livrare(id_firma);
+        c.setIDFirmaLivrare(idFirma);
         System.out.println("PRET FINAL COMANDA: " + c.getPret());
         return c;
     }
     public static Review addReview(Comanda c){
         Review myRev = new Review();
         myRev.setUsername(c.getUsername());
-        myRev.setID_Comanda(c.getID_comanda());
+        myRev.setIdComanda(c.getIDComanda());
         Scanner scanner = new Scanner(System.in);
         System.out.println("Scrie review-ul (mesajul se va termina la enter): ");
         scanner.useDelimiter("\n");
@@ -137,20 +125,20 @@ public class Serviciu {
         System.out.print("Prenume: ");
         String prenume = scanner.next();
         System.out.print("Nr telefon: ");
-        String nr_tel = scanner.next();
+        String nrTel = scanner.next();
         System.out.print("Username: ");
         String username = scanner.next();
         System.out.print("Adresa: ");
         scanner.useDelimiter("\n");
         String adresa = scanner.next();
         scanner.reset();
-        return new User(nume,prenume,nr_tel,username,adresa);
+        return new User(nume,prenume,nrTel,username,adresa);
     }
     public static void searchProduct(String denumireProdus, ArrayList<Local> localuri){
         boolean OK = false;
         for (Local local :
                 localuri) {
-            List<Produs> produseLocal = local.getLista_produse();
+            List<Produs> produseLocal = local.getListaProduse();
             for (Produs produs :
                     produseLocal) {
                 if(produs.getDenumire().equalsIgnoreCase(denumireProdus)) {

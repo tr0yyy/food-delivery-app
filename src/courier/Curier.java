@@ -2,10 +2,8 @@ package courier;
 
 import person.Persoana;
 
-import java.util.Scanner;
-
 public class Curier extends Persoana{
-    private Integer id_livrator = 0;
+    private Integer idLivrator = 0;
     private Masina car;
 
     public Curier() {
@@ -18,16 +16,16 @@ public class Curier extends Persoana{
 
     public Curier(Curier curier) {
         super(curier);
-        this.id_livrator = curier.id_livrator;
+        this.idLivrator = curier.idLivrator;
         this.car = curier.car;
     }
 
-    public Integer getId_livrator() {
-        return id_livrator;
+    public Integer getIdLivrator() {
+        return idLivrator;
     }
 
-    public void setId_livrator(Integer id_livrator) {
-        this.id_livrator = id_livrator;
+    public void setIdLivrator(Integer idLivrator) {
+        this.idLivrator = idLivrator;
     }
 
     public Masina getCar() {
@@ -40,10 +38,10 @@ public class Curier extends Persoana{
 
     @Override
     public String toString() {
-        return "ID Firma Livrare " + id_livrator + '\n' +
+        return "ID Firma Livrare " + idLivrator + '\n' +
                 "Nume " + nume + '\n' +
                 "Prenume " + prenume + '\n' +
-                "Numar telefon " + nr_telefon + '\n' +
+                "Numar telefon " + nrTelefon + '\n' +
                 "Masina " + car + '\n';
     }
 

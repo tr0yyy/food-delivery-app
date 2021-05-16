@@ -1,28 +1,23 @@
 package person;
 
-import order.User;
-
 public class Persoana implements Comparable<Persoana> {
     protected String nume;
     protected String prenume;
-    protected String nr_telefon;
+    protected String nrTelefon;
 
     public Persoana(){
-        nume = "";
-        prenume = "";
-        nr_telefon = "";
     }
 
-    public Persoana(String nume, String prenume, String nr_telefon){
+    public Persoana(String nume, String prenume, String nrTelefon){
         this.nume = nume;
         this.prenume = prenume;
-        this.nr_telefon = nr_telefon;
+        this.nrTelefon = nrTelefon;
     }
 
     public Persoana(Persoana persoana) {
         this.nume = persoana.nume;
         this.prenume = persoana.prenume;
-        this.nr_telefon = persoana.nr_telefon;
+        this.nrTelefon = persoana.nrTelefon;
     }
 
     public String getNume() {
@@ -41,19 +36,19 @@ public class Persoana implements Comparable<Persoana> {
         this.prenume = prenume;
     }
 
-    public String getNr_telefon() {
-        return nr_telefon;
+    public String getNrTelefon() {
+        return nrTelefon;
     }
 
-    public void setNr_telefon(String nr_telefon) {
-        this.nr_telefon = nr_telefon;
+    public void setNrTelefon(String nrTelefon) {
+        this.nrTelefon = nrTelefon;
     }
 
     @Override
     public String toString() {
         return "Nume " + nume + '\n' +
                 "Prenume " + prenume + '\n' +
-                "Numar telefon " + nr_telefon + '\n';
+                "Numar telefon " + nrTelefon + '\n';
     }
 
     @Override

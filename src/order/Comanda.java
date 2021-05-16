@@ -5,35 +5,35 @@ import food.Produs;
 import java.util.*;
 
 public class Comanda {
-    static int nr_comenzi = 0;
-    private Integer ID_comanda;
+    private static int nrComenzi = 0;
+    private Integer idComanda;
     private String username;
     private String local;
-    private Integer ID_firma_livrare;
+    private Integer IDFirmaLivrare;
     private Float pret = 0.0f;
     private List<Produs> produse = new ArrayList<>();
 
 
 
-    public Comanda(String username, String local, Integer ID_firma_livrare) {
-        nr_comenzi++;
-        this.ID_comanda = nr_comenzi;
+    public Comanda(String username, String local, Integer IDFirmaLivrare) {
+        nrComenzi++;
+        this.idComanda = nrComenzi;
         this.username = username;
         this.local = local;
-        this.ID_firma_livrare = ID_firma_livrare;
+        this.IDFirmaLivrare = IDFirmaLivrare;
     }
 
     public Comanda() {
-        nr_comenzi++;
-        this.ID_comanda = nr_comenzi;
+        nrComenzi++;
+        this.idComanda = nrComenzi;
     }
 
-    public void setID_comanda(Integer ID_comanda) {
-        this.ID_comanda = ID_comanda;
+    public void setIDComanda(Integer IDComanda) {
+        this.idComanda = IDComanda;
     }
 
-    public Integer getID_comanda() {
-        return ID_comanda;
+    public Integer getIDComanda() {
+        return idComanda;
     }
 
     public String getUsername() {
@@ -52,12 +52,12 @@ public class Comanda {
         this.local = local;
     }
 
-    public Integer getID_firma_livrare() {
-        return ID_firma_livrare;
+    public Integer getIDFirmaLivrare() {
+        return IDFirmaLivrare;
     }
 
-    public void setID_firma_livrare(Integer ID_firma_livrare) {
-        this.ID_firma_livrare = ID_firma_livrare;
+    public void setIDFirmaLivrare(Integer IDFirmaLivrare) {
+        this.IDFirmaLivrare = IDFirmaLivrare;
     }
 
     public Float getPret() {
@@ -76,7 +76,7 @@ public class Comanda {
         this.produse = produse;
     }
 
-    public void add_produse(Produs p){
+    public void addProduse(Produs p){
         produse.add(p);
         pret = pret + p.getPret();
     }
@@ -84,10 +84,10 @@ public class Comanda {
     @Override
     public String toString() {
         return "Comanda{" +
-                "ID_comanda=" + ID_comanda +
+                "ID_comanda=" + idComanda +
                 ", username='" + username + '\'' +
                 ", local='" + local + '\'' +
-                ", ID_firma_livrare=" + ID_firma_livrare +
+                ", ID_firma_livrare=" + IDFirmaLivrare +
                 ", pret=" + pret +
                 ", produse=" + produse +
                 '}';
