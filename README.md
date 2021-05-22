@@ -1,7 +1,9 @@
-## Platforma Food Delivery
-### Elemente Avansate de Programare - CTI - 2020/21
+# Platforma Food Delivery
+## Elemente Avansate de Programare - CTI - 2020/21
 
 ---
+
+### ETAPA 1
 
 * In cadrul sistemului creat, se pot efecuta urmatoarele operatii:
     * Adaugare curier in cadrul companiei de livrari
@@ -29,16 +31,17 @@
     * Persoana
   
 ---
-ETAPA 2
+### ETAPA 2
 
 * Noile clase definite pentru aceasta etapa:
     * services.CSVTools
     * services.Singleton
   
 ---
-ETAPA 3
+### ETAPA 3
 
-Diagrama conceptuala pentru serverul de baze de date
+#### Diagrama conceptuala pentru serverul de baze de date:
+
 !["Diagrama conceptuala"](./sql/diagramaconceptuala.png)
 
 Pentru crearea bazei de date, am folosit MySQL.
