@@ -34,4 +34,11 @@ ETAPA 2
 * Noile clase definite pentru aceasta etapa:
     * services.CSVTools
     * services.Singleton
+  
+---
+ETAPA 3
 
+Diagrama conceptuala pentru serverul de baze de date
+!["Diagrama conceptuala"](./sql/diagramaconceptuala.png)
+
+Pentru crearea bazei de date, am folosit MySQL.
