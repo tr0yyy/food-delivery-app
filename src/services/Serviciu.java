@@ -10,8 +10,8 @@ import order.Comanda;
 import order.Review;
 import order.User;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Serviciu {
@@ -20,7 +20,7 @@ public class Serviciu {
 
     private void initMeniu(){
         System.out.println("--------------------NICOI ALEXANDRU // GRUPA 253 // ELEMENTE AVANSATE DE PROGRAMARE--------------------");
-        System.out.println("-----------------------FOOD DELIVERY - ETAPA 2-----------------------");
+        System.out.println("-----------------------FOOD DELIVERY - ETAPA 3-----------------------");
         System.out.println("-----------Pentru a utiliza o functie a meniului, tastati numarul corespunzator functiei alese-------------");
         System.out.println();
         System.out.println("1. Adaugare curier in cadrul companiei de livrari.");
@@ -35,20 +35,66 @@ public class Serviciu {
         System.out.println("0. Iesire.");
     }
 
-    public void executeServices() throws InstantiationException, IllegalAccessException{
+    public void executeServices() throws InstantiationException, IllegalAccessException, SQLException, FileNotFoundException {
         ArrayList<String> fisiereLocaluri = new ArrayList<>();
         fisiereLocaluri.add("src/food/mcdonalds.csv");
         fisiereLocaluri.add("src/food/kfc.csv");
         fisiereLocaluri.add("src/food/hercule.csv");
         CSVTools myCSVTool = new CSVTools();
-        ArrayList<Local> localuri = myCSVTool.readRestaurants(fisiereLocaluri);
+        SQLTools mySQLTool = new SQLTools();
+        ArrayList<Local> localuri = mySQLTool.readRestaurantsSQL();
+        ArrayList<User> useri = myCSVTool.readUsers("src/order/useri.csv");
         //ReadFromCSV.ReadUsers();
         /// init data entries
         FirmaLivrare foodpanda = myCSVTool.readFirmaLivrare("src/courier/foodpanda.csv","FoodPanda");
-        ArrayList<User> useri = myCSVTool.readUsers("src/order/useri.csv");
         List<Comanda> comenzi = new ArrayList<>();
         List<Review> reviews = new ArrayList<>();
 
+        File my_file = new File("src/checker.txt");
+        Scanner scannerFile = new Scanner(my_file);
+        String data = scannerFile.nextLine();
+        /// Initializare baza de date - daca nu este creata
+        if(data.equals("FALSE")){
+            Set<String> setOfIngredients = new HashSet<String>();
+            for (Local local :
+                    localuri) {
+                for (Produs produs :
+                        local.getListaProduse()) {
+                    for (Ingredient i :
+                            produs.getIngrediente()) {
+                        setOfIngredients.add(i.getDenumire());
+                    }
+                }
+            }
+            for (String denumire_ingredient :
+                    setOfIngredients) {
+                mySQLTool.insertIngredient(denumire_ingredient);
+            }
+            for (Local local :
+                    localuri) {
+                mySQLTool.insertLocal(local);
+                for (Produs produs :
+                        local.getListaProduse()) {
+                    mySQLTool.insertProdus(local.getDenumire(), produs);
+                }
+            }
+            mySQLTool.insertFirmaLivrare("Foodpanda");
+            for (User user :
+                    useri) {
+                mySQLTool.insertUser(user);
+            }
+            FileWriter fw = null;
+            try {
+                fw = new FileWriter("src/checker.txt");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter out = new PrintWriter(bw);
+            out.write("TRUE");
+            out.close();
+        }
+        mySQLTool.selectProduse();
         Scanner scanner = new Scanner(System.in);
         int opt;
         initMeniu();
@@ -326,6 +372,8 @@ public class Serviciu {
         if(!OK)
             System.out.println("Userul " + username + " nu a realizat nicio comanda");
     }
+
+
 
 
 }

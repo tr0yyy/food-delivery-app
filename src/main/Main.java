@@ -9,11 +9,13 @@ import order.User;
 import services.Serviciu;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws InstantiationException, IllegalAccessException, SQLException, FileNotFoundException {
         Serviciu myService = new Serviciu();
         myService.executeServices();
     }
