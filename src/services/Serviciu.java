@@ -24,14 +24,15 @@ public class Serviciu {
         System.out.println("-----------Pentru a utiliza o functie a meniului, tastati numarul corespunzator functiei alese-------------");
         System.out.println();
         System.out.println("1. Adaugare curier in cadrul companiei de livrari.");
-        System.out.println("2. Listare produse specifice unui local.");
+        System.out.println("2*. Listare produse specifice unui local din baza de date MySQL.");
         System.out.println("3. Listare ingrediente dintr-un produs.");
-        System.out.println("4. Plasare comanda.");
+        System.out.println("4*. Plasare comanda si scriere in BD.");
         System.out.println("5. Adaugare review asupra comenzii.");
-        System.out.println("6. Adaugare User care va folosi platforma.");
+        System.out.println("6*. Adaugare User care va folosi platforma in BD.");
         System.out.println("7. Listare comenzi plasate de catre un anumit user.");
         System.out.println("8. Cautare un anumit produs in mai multe localuri.");
         System.out.println("9. Cautare local in functie de oras.");
+        System.out.println("10*. Modificare produse (modifica pretul / sterge ingredient) din BD.");
         System.out.println("0. Iesire.");
     }
 
@@ -43,7 +44,7 @@ public class Serviciu {
         CSVTools myCSVTool = new CSVTools();
         SQLTools mySQLTool = new SQLTools();
         ArrayList<Local> localuri = mySQLTool.readRestaurantsSQL();
-        ArrayList<User> useri = myCSVTool.readUsers("src/order/useri.csv");
+        ArrayList<User> useri = mySQLTool.readUsersSQL();
         //ReadFromCSV.ReadUsers();
         /// init data entries
         FirmaLivrare foodpanda = myCSVTool.readFirmaLivrare("src/courier/foodpanda.csv","FoodPanda");
@@ -94,7 +95,6 @@ public class Serviciu {
             out.write("TRUE");
             out.close();
         }
-        mySQLTool.selectProduse();
         Scanner scanner = new Scanner(System.in);
         int opt;
         initMeniu();
@@ -116,9 +116,7 @@ public class Serviciu {
                             localuri) {
                         if(local.getDenumire().equalsIgnoreCase(localStr))
                         {
-                            List<Produs> produse = local.getListaProduse();
-                            for(Produs produs : produse)
-                                System.out.println(produs);
+                            mySQLTool.selectProductsFromLocal(local);
                             OK = true;
                             break;
                         }
@@ -154,6 +152,7 @@ public class Serviciu {
                                 System.out.println("Fisierul este de tip Read-Only!");
                                 break;
                             }
+                        mySQLTool.insertComanda(c);
                         myCSVTool.writeOrderToFile(c, "src/comenzi.csv");
                         myCSVTool.auditComanda("src/audit.csv", c);
                     } catch (IOException e) {
@@ -177,7 +176,9 @@ public class Serviciu {
                         System.out.println("Comanda nu exista!");
                     break;
                 case 6:
-                    useri.add(addUser());
+                    User newUser = addUser();
+                    useri.add(newUser);
+                    mySQLTool.insertUser(newUser);
                     System.out.println("User adaugat!");
                     break;
                 case 7:
@@ -200,6 +201,11 @@ public class Serviciu {
                     choice = scanner.next();
                     scanner.reset();
                     Local myLocal = searchLocal(choice, localuri);
+                    break;
+                case 10:
+                    System.out.println("Ce produs vrei sa modifici: ");
+                    choice = scanner.next();
+                    mySQLTool.modifyProduct(choice);
                     break;
                 case 0:
                     System.exit(0);

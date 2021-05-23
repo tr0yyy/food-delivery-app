@@ -70,5 +70,14 @@ CREATE TABLE comanda(
     foreign key (firma_livrare) references firma_livrare(denumire)
 );
 
+CREATE TABLE lista_cumparaturi(
+    id int not null AUTO_INCREMENT,
+    comanda_id int not null,
+    produs_id int not null,
+    primary key (id),
+    foreign key (comanda_id) references comanda(comanda_id),
+    foreign key (produs_id) references produs(produs_id)
+);
+
 commit;
     
