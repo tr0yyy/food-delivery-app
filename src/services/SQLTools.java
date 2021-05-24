@@ -267,14 +267,11 @@ public class SQLTools {
                 System.out.println("Operatie realizata cu succes!");
             }
             else if(choice.equalsIgnoreCase("I")){
-                System.out.println("Vrei sa stergi sau sa adaugi ingredient? (S - sterge, A - adauga)");
+                System.out.println("Ce ingredient vrei sa stergi?: ");
                 choice = scanner.next();
-                if(choice.equalsIgnoreCase("S"));{
-                    System.out.println("Ce ingredient vrei sa stergi?: ");
-                    choice = scanner.next();
-                    query = "delete from alocare where lower(ingredient) like lower('"+choice+"');";
-                    stmt.execute(query);
-                }
+                query = "delete from alocare where lower(ingredient) like lower('"+choice+"');" +
+                        "and produs_id = " + produsID + ";";
+                stmt.execute(query);
             }
         } catch (SQLException e) {
             e.printStackTrace();
